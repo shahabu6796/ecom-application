@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/order")
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class OrderController
 {
     private final OrderService orderService;

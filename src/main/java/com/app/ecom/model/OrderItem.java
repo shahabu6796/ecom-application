@@ -24,12 +24,12 @@ public class OrderItem
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "productId", nullable = false)
+    @JoinColumn(name = "product_Id", nullable = false)
     private Product product;
     private Integer quantity;
     private BigDecimal price;
 
     @ManyToOne
-    @JoinColumn(name = "orderId", nullable = false)
+    @JoinColumn(name = "order_Id", nullable = false)
     private Order order;
 }

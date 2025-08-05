@@ -24,14 +24,17 @@ public class CartItem
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "productId")
+    @JoinColumn(name = "user_Id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "product_Id")
     private Product product;
 
     private Integer quantity;
     private BigDecimal price;
 
     @ManyToOne
-    @JoinColumn(name = "oderId", nullable = false)
+    @JoinColumn(name = "oder_Id", nullable = false)
     private Order order;
     @CreationTimestamp
     private LocalDateTime createdAt;
