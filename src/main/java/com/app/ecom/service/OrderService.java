@@ -29,17 +29,20 @@ public class OrderService
 
     public Optional<OrderResponse> createOrder(String userId)
     {
+        // validate for cartItems
         List<CartItem> cartItems = cartService.getCartItems(userId);
         if (cartItems.isEmpty())
         {
             return Optional.empty();
         }
+        // validate for user
         Optional<User> userOptional = userRepository.findById(Long.valueOf(userId));
         if (userOptional.isEmpty())
         {
             return Optional.empty();
         }
         User user = userOptional.get();
+        // calculate total price
         BigDecimal totalPrice = cartItems.stream().map(CartItem::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
 
         Order order = new Order();
@@ -50,11 +53,10 @@ public class OrderService
         List<OrderItem> orderItems = cartItems.stream().map(item -> new OrderItem(null, item.getProduct(), item.getQuantity(), item.getPrice(), item.getOrder())).collect(Collectors.toList());
         order.setItems(orderItems);
 
-        Order savedOrder = orderRepository.save(order);
-        // validate for user
-        // calculate total price
         // create order
-        // create the cart
+        Order savedOrder = orderRepository.save(order);
+
+        // clear the cart
         cartService.clearCart(userId);
         return Optional.of(mapToOrderResponse(savedOrder));
     }
